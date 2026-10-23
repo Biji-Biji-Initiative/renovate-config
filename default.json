@@ -1,0 +1,48 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Biji-Biji-Initiative shared Renovate preset. Run by the self-hosted Renovate on host g (team-skills tools/renovate). Weekly, grouped, off-hours, no install scripts, no automerge unless a repo opts in.",
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboard",
+    ":semanticCommitsDisabled"
+  ],
+  "timezone": "Asia/Kuala_Lumpur",
+  "schedule": ["before 6am on monday"],
+  "labels": ["dependencies"],
+  "prConcurrentLimit": 5,
+  "prHourlyLimit": 2,
+  "ignoreScripts": true,
+  "minimumReleaseAge": "3 days",
+  "internalChecksFilter": "strict",
+  "dependencyDashboardTitle": "Dependency Dashboard (Renovate)",
+  "separateMajorMinor": true,
+  "separateMultipleMajor": true,
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 6am on the first day of the month"],
+    "automerge": false
+  },
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "labels": ["dependencies", "security"],
+    "schedule": ["at any time"],
+    "minimumReleaseAge": null,
+    "prPriority": 10,
+    "groupName": null
+  },
+  "osvVulnerabilityAlerts": true,
+  "packageRules": [
+    {
+      "description": "Minor and patch updates grouped into one PR per package manager",
+      "matchUpdateTypes": ["minor", "patch", "digest", "pin", "pinDigest"],
+      "groupName": "non-major dependencies ({{manager}})",
+      "groupSlug": "non-major-{{manager}}"
+    },
+    {
+      "description": "Majors stay one PR per dependency and are labelled so they are reviewed on purpose",
+      "matchUpdateTypes": ["major"],
+      "labels": ["dependencies", "major"],
+      "dependencyDashboardApproval": false
+    }
+  ]
+}
